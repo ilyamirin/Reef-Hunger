@@ -1,0 +1,7 @@
+dist
+node_modules
+coverage
+pnpm-lock.yaml
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
