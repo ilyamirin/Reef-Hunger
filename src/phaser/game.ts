@@ -37,6 +37,10 @@ export class ReefHungerGame {
     this.scene?.restartRun();
   }
 
+  public startRun(): void {
+    this.scene?.handleRunStart();
+  }
+
   public setSuspended(suspended: boolean): void {
     this.suspended = suspended;
     this.scene?.setSuspended(suspended);

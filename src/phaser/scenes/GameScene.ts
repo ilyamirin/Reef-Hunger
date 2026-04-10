@@ -9,6 +9,7 @@ import type {
   MovementDelta,
   SimulationEvent
 } from "../../game/simulation/types";
+import { AudioController } from "../audio/AudioController";
 import { AnemoneView } from "../view/AnemoneView";
 
 interface LayoutState {
@@ -47,8 +48,10 @@ export class GameScene extends Phaser.Scene {
   private gridGraphics!: Phaser.GameObjects.Graphics;
   private accentGraphics!: Phaser.GameObjects.Graphics;
   private anemone!: AnemoneView;
+  private audio!: AudioController;
   private suspended = false;
   private lastHudKey = "";
+  private dangerLatched = false;
 
   public constructor(
     private readonly uiBridge: UIBridge,
@@ -67,6 +70,7 @@ export class GameScene extends Phaser.Scene {
     this.accentGraphics = this.add.graphics();
     this.accentGraphics.setDepth(2);
 
+    this.audio = new AudioController(this);
     this.anemone = new AnemoneView(this);
 
     this.createAmbientBubbles();
@@ -76,6 +80,7 @@ export class GameScene extends Phaser.Scene {
     this.scale.on("resize", this.handleResize, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.scale.off("resize", this.handleResize, this);
+      this.audio.destroy();
       this.anemone.destroy();
     });
     this.onReady(this);
@@ -91,15 +96,25 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.updateAmbient(delta);
+    this.updateDangerAudio();
     this.anemone.update(this.time.now);
     this.pushHudUpdate();
   }
 
   public setSuspended(suspended: boolean): void {
     this.suspended = suspended;
+    this.audio?.setSuspended(suspended);
+  }
+
+  public handleRunStart(): void {
+    this.audio.unlock();
+    this.audio.play("startRun");
+    this.audio.startAmbient();
   }
 
   public restartRun(): void {
+    this.audio.handleRunRestart();
+    this.dangerLatched = false;
     this.consumeEvents([this.engine.restart()]);
   }
 
@@ -132,6 +147,7 @@ export class GameScene extends Phaser.Scene {
         case "tick":
           this.applyTick(event.moved, event.spawned, event.despawnedIds);
           if (event.lost) {
+            this.audio.handleGameOver();
             this.emitBestScoreIfNeeded();
           }
           break;
@@ -196,6 +212,26 @@ export class GameScene extends Phaser.Scene {
     const targetPoint = this.worldFromCell(event.cell);
     this.anemone.attack(targetPoint, event.resolution, this.time.now);
     this.spawnAttackFlash(targetPoint, event.resolution === "miss");
+
+    if (event.resolution === "hit-edible") {
+      this.audio.play("hitEdible");
+    } else if (event.resolution === "hit-hostile") {
+      this.audio.play("hitJunk");
+    } else if (event.resolution === "miss") {
+      this.audio.play("miss");
+    }
+
+    if (event.speciesBonusTriggered) {
+      this.audio.play("speciesBonus");
+    }
+
+    if (event.multiplierIncreased) {
+      this.audio.play("comboUp");
+    }
+
+    if (event.comboBroken) {
+      this.audio.play("comboBreak");
+    }
 
     if (event.removedId) {
       const actor = this.enemyActors.get(event.removedId);
@@ -464,6 +500,26 @@ export class GameScene extends Phaser.Scene {
 
   private flashGrid(): void {
     this.cameras.main.flash(180, 88, 214, 198, false);
+  }
+
+  private updateDangerAudio(): void {
+    const state = this.engine.getState();
+    const pressure = state.pace.pressure;
+
+    if (state.phase !== "running") {
+      this.dangerLatched = false;
+      return;
+    }
+
+    if (pressure >= 0.74 && !this.dangerLatched) {
+      this.audio.play("danger");
+      this.dangerLatched = true;
+      return;
+    }
+
+    if (pressure <= 0.55) {
+      this.dangerLatched = false;
+    }
   }
 
   private clearActors(): void {

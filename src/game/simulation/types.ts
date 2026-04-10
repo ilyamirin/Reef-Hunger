@@ -134,6 +134,9 @@ export interface AttackEvent {
   removedKind?: EnemyKind;
   pointsGained: number;
   speciesBonusTriggered: boolean;
+  comboBroken: boolean;
+  multiplierIncreased: boolean;
+  nextMultiplier: number;
 }
 
 export interface RestartEvent {

@@ -90,6 +90,7 @@ const syncOverlays = (): void => {
 
 const startRun = (): void => {
   hasStarted = true;
+  reefGame.startRun();
   startOverlay.classList.add("hidden");
   gameOverOverlay.classList.add("hidden");
   syncOverlays();

@@ -486,6 +486,10 @@ const applyAttack = (
   );
 
   if (!target) {
+    const comboBroken =
+      pruned.combo.streak > 0 ||
+      pruned.combo.speciesBonusUntilMs !== null ||
+      pruned.combo.lastKillKind !== null;
     const missedState = updateAdaptivePace(config, {
       ...pruned,
       combo: resetComboState(pruned.combo),
@@ -502,7 +506,10 @@ const applyAttack = (
         resolution: "miss",
         cell,
         pointsGained: 0,
-        speciesBonusTriggered: false
+        speciesBonusTriggered: false,
+        comboBroken,
+        multiplierIncreased: false,
+        nextMultiplier: 1
       }
     };
   }
@@ -520,6 +527,9 @@ const applyAttack = (
       : 1);
 
   const speciesPairTriggered = pruned.combo.lastKillKind === target.kind;
+  const multiplierIncreased =
+    target.edible && multiplier > pruned.combo.multiplier;
+  const comboBroken = !target.edible && pruned.combo.streak > 0;
   const nextCombo: ComboState = target.edible
     ? {
         streak,
@@ -558,7 +568,10 @@ const applyAttack = (
       removedId: target.id,
       removedKind: target.kind,
       pointsGained,
-      speciesBonusTriggered: speciesPairTriggered
+      speciesBonusTriggered: speciesPairTriggered,
+      comboBroken,
+      multiplierIncreased,
+      nextMultiplier: nextCombo.multiplier
     }
   };
 };
