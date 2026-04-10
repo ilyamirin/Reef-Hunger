@@ -7,6 +7,41 @@
       content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
     />
     <meta name="theme-color" content="#04172c" />
+    <meta
+      name="description"
+      content="A hungry anemone. Falling sea creatures. One tap too late and the reef wins."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Reef Hunger" />
+    <meta property="og:title" content="Reef Hunger" />
+    <meta
+      property="og:description"
+      content="Feed the anemone. Hold the reef. Tap fast, chain kills, and dodge cursed ocean junk."
+    />
+    <meta
+      property="og:url"
+      content="https://ilyamirin.github.io/Reef-Hunger/"
+    />
+    <meta
+      property="og:image"
+      content="https://ilyamirin.github.io/Reef-Hunger/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Reef Hunger social card with a glowing anemone reaching for falling sea creatures in a deep blue reef."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Reef Hunger" />
+    <meta
+      name="twitter:description"
+      content="Feed the anemone. Hold the reef. Tap fast, chain kills, and dodge cursed ocean junk."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ilyamirin.github.io/Reef-Hunger/social-card.png"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Reef Hunger Arcade</title>
     <style>
@@ -14,8 +49,9 @@
       body {
         margin: 0;
         width: 100%;
-        height: 100%;
-        overflow: hidden;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
         background: linear-gradient(
           180deg,
           #04172c 0%,
@@ -38,7 +74,7 @@
       }
 
       body.booting #start-overlay {
-        position: fixed;
+        position: absolute;
         inset: 0;
         display: grid;
         place-items: center;
