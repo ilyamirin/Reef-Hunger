@@ -28,7 +28,7 @@ Use these prompts with `replicate-nano-banana-pro-http` when replacing the proce
 
 ## Diver
 
-`stylized 2D arcade diver enemy sprite sheet, compact wetsuit silhouette, readable fins and mask, blue-white glow accents, transparent background, no scenery, production game asset`
+`stylized 2D arcade sperm whale enemy sprite sheet, exaggerated blocky forehead, readable tail and belly silhouette, blue-white ocean palette, transparent background, no scenery, production game asset`
 
 ## Tire
 

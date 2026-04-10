@@ -3,7 +3,7 @@ export type EnemyKind =
   | "crab"
   | "starfish"
   | "urchin"
-  | "diver"
+  | "spermwhale"
   | "tire"
   | "anchor"
   | "plate";

@@ -11,8 +11,8 @@ const enemyColors: Record<
   fish: { main: 0x64f2d9, alt: 0x1aa3b2, glow: 0xbffff0 },
   crab: { main: 0xff8e73, alt: 0xd84b59, glow: 0xffd1bf },
   starfish: { main: 0xffcd72, alt: 0xff8962, glow: 0xfff0b7 },
-  urchin: { main: 0x9d85ff, alt: 0x4f43cb, glow: 0xd7cbff },
-  diver: { main: 0x7bc0ff, alt: 0x204a87, glow: 0xdbf4ff },
+  urchin: { main: 0xd97a97, alt: 0xf7c7da, glow: 0x8a3d61 },
+  spermwhale: { main: 0x73c3f6, alt: 0x4c98d3, glow: 0xedf9ff },
   tire: { main: 0x20242b, alt: 0x57606d, glow: 0x707b89 },
   anchor: { main: 0xafc0d0, alt: 0x5c7590, glow: 0x0d2742 },
   plate: { main: 0xf6e37a, alt: 0x181818, glow: 0xe9d35a }
@@ -108,41 +108,147 @@ const drawUrchin = (
   wobble: number,
   colors: { main: number; alt: number; glow: number }
 ): void => {
-  graphics.lineStyle(4, colors.alt, 1);
-  for (let spike = 0; spike < 12; spike += 1) {
-    const angle = Phaser.Math.DegToRad(spike * 30 + wobble * 8);
-    const startX = 48 + Math.cos(angle) * 16;
-    const startY = 48 + Math.sin(angle) * 16;
-    const endX = 48 + Math.cos(angle) * 34;
-    const endY = 48 + Math.sin(angle) * 34;
+  const baseY = 56;
+  const coreRadius = 22;
+  const innerRadius = 16;
+  const outerRing = 30 + wobble * 0.4;
+  const spikeLengths = [12, 15, 13, 17, 11, 16, 12, 14, 18, 13, 15, 12, 16, 11];
+
+  graphics.lineStyle(4, colors.glow, 0.92);
+  for (let spike = 0; spike < spikeLengths.length; spike += 1) {
+    const angle = Phaser.Math.DegToRad(198 + spike * 11 + wobble * 2);
+    const startX = 48 + Math.cos(angle) * innerRadius;
+    const startY = baseY + Math.sin(angle) * (innerRadius - 1);
+    const endX = 48 + Math.cos(angle) * (outerRing + spikeLengths[spike]);
+    const endY = baseY + Math.sin(angle) * (outerRing + spikeLengths[spike]);
     graphics.beginPath();
     graphics.moveTo(startX, startY);
     graphics.lineTo(endX, endY);
     graphics.strokePath();
   }
-  graphics.fillStyle(colors.glow, 0.14);
-  graphics.fillCircle(48, 48, 28);
+
+  graphics.lineStyle(3, colors.alt, 0.98);
+  for (let spike = 0; spike < 16; spike += 1) {
+    const angle = Phaser.Math.DegToRad(208 + spike * 8 + wobble * 1.5);
+    const startX = 48 + Math.cos(angle) * 12;
+    const startY = baseY - 1 + Math.sin(angle) * 10;
+    const endX = 48 + Math.cos(angle) * 27;
+    const endY = baseY - 4 + Math.sin(angle) * 24;
+    graphics.beginPath();
+    graphics.moveTo(startX, startY);
+    graphics.lineTo(endX, endY);
+    graphics.strokePath();
+  }
+
+  graphics.fillStyle(0x6d2341, 1);
+  graphics.fillEllipse(48, 58, 46, 26);
   graphics.fillStyle(colors.main, 1);
-  graphics.fillCircle(48, 48, 20 + wobble * 0.4);
+  graphics.fillEllipse(48, 54, coreRadius * 2.3, coreRadius * 1.55);
+  graphics.fillStyle(0xe9a7be, 1);
+  graphics.fillEllipse(48, 50, 27, 13);
+  graphics.fillStyle(0xf7dce6, 0.9);
+  graphics.fillEllipse(42, 47, 12, 7);
 };
 
-const drawDiver = (
+const drawSpermWhale = (
   graphics: Phaser.GameObjects.Graphics,
   wobble: number,
   colors: { main: number; alt: number; glow: number }
 ): void => {
-  graphics.fillStyle(colors.glow, 0.14);
-  graphics.fillRoundedRect(22, 18, 52, 56, 18);
-  graphics.fillStyle(colors.alt, 1);
-  graphics.fillRoundedRect(36, 20, 24, 34, 10);
+  const bob = wobble * 0.6;
+
   graphics.fillStyle(colors.main, 1);
-  graphics.fillEllipse(48, 59, 26, 20);
-  graphics.fillRect(38 - wobble, 50, 6, 20);
-  graphics.fillRect(52 + wobble, 50, 6, 20);
-  graphics.fillTriangle(30, 72, 12, 84, 30, 84);
-  graphics.fillTriangle(66, 72, 84, 84, 66, 84);
-  graphics.fillStyle(0xeefaff, 0.92);
-  graphics.fillRoundedRect(38, 24, 20, 10, 5);
+  graphics.beginPath();
+  graphics.moveTo(18, 58);
+  graphics.lineTo(28, 35 + bob);
+  graphics.lineTo(46, 22);
+  graphics.lineTo(73, 18);
+  graphics.lineTo(88, 24);
+  graphics.lineTo(92, 37);
+  graphics.lineTo(90, 53);
+  graphics.lineTo(82, 68);
+  graphics.lineTo(70, 80);
+  graphics.lineTo(51, 89);
+  graphics.lineTo(30, 91);
+  graphics.lineTo(16, 82);
+  graphics.lineTo(11, 70);
+  graphics.closePath();
+  graphics.fillPath();
+
+  graphics.fillStyle(colors.glow, 1);
+  graphics.beginPath();
+  graphics.moveTo(38, 42);
+  graphics.lineTo(49, 32);
+  graphics.lineTo(66, 27);
+  graphics.lineTo(83, 29);
+  graphics.lineTo(87, 40);
+  graphics.lineTo(84, 54);
+  graphics.lineTo(66, 55);
+  graphics.lineTo(49, 52);
+  graphics.closePath();
+  graphics.fillPath();
+
+  graphics.fillStyle(colors.glow, 0.98);
+  graphics.fillEllipse(60, 74, 70, 30);
+
+  graphics.fillStyle(colors.alt, 1);
+  graphics.beginPath();
+  graphics.moveTo(76, 67);
+  graphics.lineTo(92, 56);
+  graphics.lineTo(89, 78);
+  graphics.closePath();
+  graphics.fillPath();
+
+  graphics.beginPath();
+  graphics.moveTo(44, 84);
+  graphics.lineTo(30, 95);
+  graphics.lineTo(34, 79);
+  graphics.closePath();
+  graphics.fillPath();
+
+  graphics.beginPath();
+  graphics.moveTo(64, 84);
+  graphics.lineTo(80, 97);
+  graphics.lineTo(73, 79);
+  graphics.closePath();
+  graphics.fillPath();
+
+  graphics.beginPath();
+  graphics.moveTo(19, 74);
+  graphics.lineTo(4, 86);
+  graphics.lineTo(8, 67);
+  graphics.closePath();
+  graphics.fillPath();
+
+  graphics.fillStyle(0xf8fdff, 1);
+  graphics.fillCircle(34, 48, 8);
+  graphics.fillStyle(0x06111d, 1);
+  graphics.fillCircle(37, 50, 3.5);
+
+  graphics.lineStyle(4, 0x334b64, 1);
+  graphics.beginPath();
+  graphics.moveTo(33, 67);
+  graphics.lineTo(48, 71 + bob);
+  graphics.lineTo(61, 70);
+  graphics.lineTo(73, 66);
+  graphics.strokePath();
+
+  graphics.lineStyle(4, 0x334b64, 1);
+  graphics.beginPath();
+  graphics.moveTo(30, 40);
+  graphics.lineTo(39, 34);
+  graphics.lineTo(50, 35);
+  graphics.strokePath();
+
+  graphics.lineStyle(5, 0xbdebff, 0.95);
+  graphics.beginPath();
+  graphics.moveTo(28, 26);
+  graphics.lineTo(34, 16);
+  graphics.lineTo(47, 11);
+  graphics.moveTo(40, 23);
+  graphics.lineTo(46, 16);
+  graphics.lineTo(58, 11);
+  graphics.strokePath();
 };
 
 const drawTire = (
@@ -310,8 +416,8 @@ export const registerGeneratedTextures = (scene: Phaser.Scene): void => {
           case "urchin":
             drawUrchin(graphics, wobble, colors);
             break;
-          case "diver":
-            drawDiver(graphics, wobble, colors);
+          case "spermwhale":
+            drawSpermWhale(graphics, wobble, colors);
             break;
           case "tire":
             drawTire(graphics, wobble, colors);

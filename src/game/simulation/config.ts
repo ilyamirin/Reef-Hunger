@@ -7,7 +7,7 @@ const weightTable = (
   crab: 0,
   starfish: 0,
   urchin: 0,
-  diver: 0,
+  spermwhale: 0,
   tire: 0,
   anchor: 0,
   plate: 0,
@@ -89,7 +89,7 @@ export const GAME_CONFIG: GameConfig = {
         ["crab", 3],
         ["starfish", 3],
         ["urchin", 2],
-        ["diver", 1],
+        ["spermwhale", 1],
         ["tire", 1],
         ["plate", 1],
         ["anchor", 1]
@@ -122,8 +122,8 @@ export const GAME_CONFIG: GameConfig = {
       scoreValue: 190,
       edible: true
     },
-    diver: {
-      kind: "diver",
+    spermwhale: {
+      kind: "spermwhale",
       stepPattern: "zigzag",
       scoreValue: 260,
       edible: true
