@@ -1,6 +1,7 @@
 dist
 node_modules
 coverage
+.playwright-cli
 pnpm-lock.yaml
 *.tsbuildinfo
 vite.config.js
