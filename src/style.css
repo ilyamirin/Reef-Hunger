@@ -90,7 +90,7 @@ button {
   position: absolute;
   left: calc(env(safe-area-inset-left, 0px) + 14px);
   right: calc(env(safe-area-inset-right, 0px) + 14px);
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 42px);
   justify-content: flex-start;
   flex-wrap: wrap;
 }
@@ -222,6 +222,42 @@ button {
   margin-right: auto;
 }
 
+.game-credit-strip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  transform: translateX(-50%);
+  width: min(100% - 28px, 420px);
+  padding: 6px 12px;
+  border: 1px solid rgba(136, 227, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(3, 14, 27, 0.46);
+  color: rgba(239, 252, 255, 0.72);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.game-credit-strip a {
+  pointer-events: auto;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.game-credit-strip a:hover,
+.game-credit-strip a:focus-visible {
+  text-decoration: underline;
+}
+
 .hidden {
   display: none;
 }
@@ -238,5 +274,16 @@ button {
 
   .control-button {
     padding: 10px 14px;
+  }
+
+  .bottom-row {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 38px);
+  }
+
+  .game-credit-strip {
+    gap: 8px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+    padding: 5px 10px;
+    font-size: 9px;
   }
 }
