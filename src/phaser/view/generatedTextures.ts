@@ -254,56 +254,53 @@ const drawSpermWhale = (
 const drawTire = (
   graphics: Phaser.GameObjects.Graphics,
   wobble: number,
-  colors: { main: number; alt: number; glow: number }
+  colors: { main: number; alt: number; glow: number },
+  frame: number
 ): void => {
-  graphics.fillStyle(colors.main, 1);
-  graphics.fillEllipse(48, 48, 66 + wobble * 0.3, 64 + wobble * 0.3);
-  graphics.fillStyle(0x0e1218, 1);
-  graphics.fillEllipse(48, 48, 46, 44);
-  graphics.fillStyle(0x2c3139, 1);
-  graphics.fillCircle(48, 48, 16);
-  graphics.fillStyle(0x101419, 1);
-  graphics.fillCircle(48, 48, 7);
+  const centerX = 48;
+  const centerY = 48;
+  const rotation = Phaser.Math.DegToRad(frame * 18);
 
-  graphics.lineStyle(6, colors.alt, 1);
-  graphics.beginPath();
-  graphics.moveTo(48, 16);
-  graphics.lineTo(48, 28);
-  graphics.moveTo(48, 68);
-  graphics.lineTo(48, 80);
-  graphics.moveTo(16, 48);
-  graphics.lineTo(28, 48);
-  graphics.moveTo(68, 48);
-  graphics.lineTo(80, 48);
-  graphics.moveTo(24, 24);
-  graphics.lineTo(33, 33);
-  graphics.moveTo(63, 63);
-  graphics.lineTo(72, 72);
-  graphics.moveTo(63, 33);
-  graphics.lineTo(72, 24);
-  graphics.moveTo(24, 72);
-  graphics.lineTo(33, 63);
-  graphics.strokePath();
+  graphics.lineStyle(13, colors.main, 1);
+  graphics.strokeEllipse(
+    centerX,
+    centerY,
+    58 + wobble * 0.3,
+    56 + wobble * 0.3
+  );
+  graphics.lineStyle(7, 0x2d323a, 1);
+  graphics.strokeEllipse(centerX, centerY, 50, 48);
+  graphics.lineStyle(4, 0x76808d, 0.85);
+  graphics.strokeEllipse(centerX, centerY, 60, 58);
 
-  graphics.lineStyle(4, colors.glow, 1);
-  graphics.beginPath();
-  graphics.moveTo(36, 18);
-  graphics.lineTo(40, 32);
-  graphics.moveTo(60, 18);
-  graphics.lineTo(56, 32);
-  graphics.moveTo(75, 36);
-  graphics.lineTo(61, 40);
-  graphics.moveTo(75, 60);
-  graphics.lineTo(61, 56);
-  graphics.moveTo(36, 78);
-  graphics.lineTo(40, 64);
-  graphics.moveTo(60, 78);
-  graphics.lineTo(56, 64);
-  graphics.moveTo(21, 36);
-  graphics.lineTo(35, 40);
-  graphics.moveTo(21, 60);
-  graphics.lineTo(35, 56);
-  graphics.strokePath();
+  graphics.lineStyle(5, colors.alt, 1);
+  for (let index = 0; index < 8; index += 1) {
+    const angle = rotation + Phaser.Math.DegToRad(index * 45);
+    const innerX = centerX + Math.cos(angle) * 21;
+    const innerY = centerY + Math.sin(angle) * 20;
+    const outerX = centerX + Math.cos(angle) * 31;
+    const outerY = centerY + Math.sin(angle) * 30;
+    graphics.beginPath();
+    graphics.moveTo(innerX, innerY);
+    graphics.lineTo(outerX, outerY);
+    graphics.strokePath();
+  }
+
+  graphics.lineStyle(6, colors.glow, 1);
+  for (let index = 0; index < 10; index += 1) {
+    const angle = rotation + Phaser.Math.DegToRad(index * 36);
+    const midX = centerX + Math.cos(angle) * 24;
+    const midY = centerY + Math.sin(angle) * 23;
+    const tipX = centerX + Math.cos(angle) * 35;
+    const tipY = centerY + Math.sin(angle) * 34;
+    graphics.beginPath();
+    graphics.moveTo(midX, midY);
+    graphics.lineTo(tipX, tipY);
+    graphics.strokePath();
+  }
+
+  graphics.lineStyle(3, 0x434a54, 0.95);
+  graphics.strokeEllipse(centerX, centerY, 42, 40);
 };
 
 const drawAnchor = (
@@ -343,15 +340,73 @@ const drawPlate = (
   graphics.fillStyle(0x8b7718, 1);
   graphics.fillCircle(24, 34, 2.5);
   graphics.fillCircle(72, 34, 2.5);
-  graphics.fillStyle(0x3c320a, 1);
-  graphics.fillRect(28, 36, 8, 4);
-  graphics.fillRect(40, 36, 8, 4);
-  graphics.fillRect(52, 36, 8, 4);
-  graphics.fillRect(64, 36, 8, 4);
   graphics.fillStyle(colors.alt, 1);
-  graphics.fillRect(30, 50, 10, 5);
-  graphics.fillRect(44, 50, 12, 5);
-  graphics.fillRect(60, 50, 10 + wobble * 0.3, 5);
+
+  const drawGlyph = (glyph: string, x: number, y: number, scale = 1): void => {
+    const unit = 2 * scale;
+    const thick = Math.max(2, 2 * scale);
+    const h = unit * 6;
+
+    const rect = (rx: number, ry: number, rw: number, rh: number): void => {
+      graphics.fillRect(x + rx * unit, y + ry * unit, rw * unit, rh * unit);
+    };
+
+    switch (glyph) {
+      case "4":
+        rect(0, 2, 1, 2);
+        rect(3, 0, 1, 6);
+        rect(0, 3, 4, 1);
+        break;
+      case "F":
+        rect(0, 0, 1, 6);
+        rect(0, 0, 4, 1);
+        rect(0, 3, 3, 1);
+        break;
+      case "J":
+        rect(0, 0, 4, 1);
+        rect(3, 0, 1, 5);
+        rect(0, 5, 4, 1);
+        rect(0, 4, 1, 1);
+        break;
+      case "-":
+        rect(0, 3, 3, 1);
+        break;
+      case "2":
+        rect(0, 0, 4, 1);
+        rect(3, 1, 1, 2);
+        rect(0, 3, 4, 1);
+        rect(0, 4, 1, 1);
+        rect(0, 5, 4, 1);
+        break;
+      case "0":
+        rect(0, 0, 4, 1);
+        rect(0, 5, 4, 1);
+        rect(0, 1, 1, 4);
+        rect(3, 1, 1, 4);
+        break;
+      case "8":
+        rect(0, 0, 4, 1);
+        rect(0, 3, 4, 1);
+        rect(0, 5, 4, 1);
+        rect(0, 1, 1, 4);
+        rect(3, 1, 1, 4);
+        break;
+      default:
+        graphics.fillRect(x, y, thick, h);
+    }
+  };
+
+  const chars = ["4", "F", "J", "-", "2", "0", "8"];
+  let cursor = 20;
+  for (const glyph of chars) {
+    drawGlyph(glyph, cursor, 41, glyph === "-" ? 0.8 : 1);
+    cursor += glyph === "-" ? 8 : 10;
+  }
+
+  graphics.fillStyle(0x8b7718, 1);
+  graphics.fillRect(20, 57, 18, 3);
+  graphics.fillRect(42, 57, 14, 3);
+  graphics.fillRect(60, 57, 14 + wobble * 0.2, 3);
 };
 
 const drawAnemoneBody = (
@@ -420,7 +475,7 @@ export const registerGeneratedTextures = (scene: Phaser.Scene): void => {
             drawSpermWhale(graphics, wobble, colors);
             break;
           case "tire":
-            drawTire(graphics, wobble, colors);
+            drawTire(graphics, wobble, colors, frame);
             break;
           case "anchor":
             drawAnchor(graphics, wobble, colors);
