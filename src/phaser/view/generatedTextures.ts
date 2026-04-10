@@ -413,23 +413,117 @@ const drawAnemoneBody = (
   graphics: Phaser.GameObjects.Graphics,
   wobble: number
 ): void => {
-  graphics.fillStyle(0x3ef0d7, 0.16);
-  graphics.fillEllipse(60, 62, 106 + wobble * 6, 82 + wobble * 4);
-  graphics.fillStyle(0x32d6d8, 1);
-  graphics.fillEllipse(60, 62, 80 + wobble * 4, 54 + wobble * 2);
-  graphics.fillStyle(0xff98aa, 0.92);
-  graphics.fillEllipse(60, 58, 52, 28 + wobble);
-  graphics.fillStyle(0x14748f, 0.9);
-  graphics.fillEllipse(60, 90, 26, 44);
-  graphics.fillStyle(0xffffff, 0.22);
-  graphics.fillEllipse(48, 50, 18, 12);
+  graphics.fillStyle(0x5dffe0, 0.14);
+  graphics.fillEllipse(60, 58, 108 + wobble * 6, 74 + wobble * 3);
+
+  // Shell support under the hero.
+  graphics.fillStyle(0xdccdb3, 0.92);
+  graphics.fillEllipse(64, 115, 58, 12);
+  graphics.lineStyle(4, 0x9d7a5d, 0.72);
+  graphics.beginPath();
+  graphics.moveTo(40, 116);
+  graphics.lineTo(55, 112);
+  graphics.lineTo(71, 111);
+  graphics.lineTo(82, 113);
+  graphics.lineTo(88, 116);
+  graphics.lineTo(78, 119);
+  graphics.lineTo(55, 120);
+  graphics.strokePath();
+
+  // Side-view pedal column: narrow at the top, much wider at the base.
+  graphics.fillStyle(0xc6465f, 1);
+  graphics.beginPath();
+  graphics.moveTo(45, 118);
+  graphics.lineTo(44, 108);
+  graphics.lineTo(44, 98);
+  graphics.lineTo(44, 88);
+  graphics.lineTo(45, 78);
+  graphics.lineTo(46, 68);
+  graphics.lineTo(48, 59);
+  graphics.lineTo(51, 51);
+  graphics.lineTo(55, 45);
+  graphics.lineTo(60, 41);
+  graphics.lineTo(66, 39);
+  graphics.lineTo(71, 39);
+  graphics.lineTo(75, 42);
+  graphics.lineTo(78, 48);
+  graphics.lineTo(80, 57);
+  graphics.lineTo(81, 69);
+  graphics.lineTo(81, 82);
+  graphics.lineTo(81, 95);
+  graphics.lineTo(80, 107);
+  graphics.lineTo(79, 117);
+  graphics.lineTo(76, 124);
+  graphics.lineTo(71, 128);
+  graphics.lineTo(62, 130);
+  graphics.lineTo(50, 129);
+  graphics.lineTo(46, 125);
+  graphics.closePath();
+  graphics.fillPath();
+  graphics.fillStyle(0xe85d7b, 0.92);
+  graphics.fillEllipse(63, 85, 16, 102);
+  graphics.fillStyle(0xffa4b8, 0.18);
+  graphics.fillEllipse(67, 80, 6, 66);
+  graphics.fillStyle(0xa52e4c, 0.28);
+  graphics.fillEllipse(52, 96, 5, 70);
+
+  // Broad pedal disc gripping the shell.
+  graphics.fillStyle(0x992b47, 0.88);
+  graphics.beginPath();
+  graphics.moveTo(36, 122);
+  graphics.lineTo(42, 118);
+  graphics.lineTo(52, 116);
+  graphics.lineTo(67, 116);
+  graphics.lineTo(78, 118);
+  graphics.lineTo(87, 122);
+  graphics.lineTo(92, 126);
+  graphics.lineTo(88, 129);
+  graphics.lineTo(77, 131);
+  graphics.lineTo(61, 132);
+  graphics.lineTo(47, 131);
+  graphics.lineTo(39, 128);
+  graphics.closePath();
+  graphics.fillPath();
+  graphics.fillStyle(0xff9ab6, 0.14);
+  graphics.fillEllipse(63, 124, 24, 6);
+
+  // Keep the original hero feel in the upper body.
+  graphics.fillStyle(0x1ec3d2, 1);
+  graphics.fillEllipse(60, 61, 80 + wobble * 4, 54 + wobble * 2);
+  graphics.fillEllipse(41, 67, 26, 28 + wobble * 0.5);
+  graphics.fillEllipse(78, 56, 24, 21 + wobble * 0.5);
+  graphics.fillEllipse(59, 50, 54 + wobble * 1.2, 21 + wobble * 0.4);
+
+  graphics.fillStyle(0xff8fa7, 0.96);
+  graphics.fillEllipse(63, 57, 56, 31 + wobble * 0.7);
+  graphics.fillStyle(0xd8527f, 0.85);
+  graphics.fillEllipse(66, 59, 42, 23 + wobble * 0.6);
+  graphics.fillStyle(0x08141f, 1);
+  graphics.fillEllipse(65, 61, 28, 14 + wobble * 0.35);
+
+  graphics.lineStyle(5, 0xffd8e2, 0.96);
+  graphics.beginPath();
+  graphics.moveTo(48, 59);
+  graphics.lineTo(54, 53);
+  graphics.lineTo(60, 58);
+  graphics.lineTo(67, 51);
+  graphics.lineTo(74, 59);
+  graphics.lineTo(81, 54);
+  graphics.strokePath();
+
+  graphics.fillStyle(0xffffff, 0.18);
+  graphics.fillEllipse(49, 47, 20, 10);
 };
 
 const drawTentacleTip = (graphics: Phaser.GameObjects.Graphics): void => {
-  graphics.fillStyle(0xffc6d2, 1);
-  graphics.fillCircle(14, 14, 10);
-  graphics.fillStyle(0xffffff, 0.36);
-  graphics.fillCircle(11, 11, 4);
+  graphics.fillStyle(0x45e1da, 0.24);
+  graphics.fillCircle(14, 14, 11);
+  graphics.fillStyle(0xffc1cf, 1);
+  graphics.fillCircle(14, 14, 8.6);
+  graphics.fillStyle(0x8d183f, 0.7);
+  graphics.fillCircle(15, 15, 3.2);
+  graphics.fillStyle(0xffffff, 0.34);
+  graphics.fillCircle(11, 11, 3.6);
 };
 
 const registerEnemyAnimations = (

@@ -97,7 +97,7 @@ export class AnemoneView {
       1 + Math.sin(nowMs * 0.0024) * 0.02,
       1 + Math.cos(nowMs * 0.0021) * 0.018
     );
-    this.body.setTint(nowMs < this.mouthOpenUntilMs ? 0xffd8cb : 0xffffff);
+    this.body.setTint(nowMs < this.mouthOpenUntilMs ? 0xffb4c5 : 0xffffff);
 
     for (let index = 0; index < this.tentacles.length; index += 1) {
       const tentacle = this.tentacles[index];
@@ -162,14 +162,31 @@ export class AnemoneView {
         tip
       );
       const points = curve.getPoints(10);
-      this.graphics.lineStyle(8, 0x45e1da, 0.22);
+      const centerBias =
+        1 -
+        Math.abs(index - (this.tentacles.length - 1) / 2) /
+          ((this.tentacles.length - 1) / 2);
+      const outerWidth = 8 + centerBias * 1.8 + extend * 1.2;
+      const innerWidth = 3.8 + centerBias * 1.1 + extend * 0.6;
+      const hotCoreWidth = 1.6 + centerBias * 0.5;
+
+      this.graphics.lineStyle(outerWidth, 0x45e1da, 0.18);
       this.graphics.beginPath();
       this.graphics.moveTo(points[0].x, points[0].y);
       for (let pointIndex = 1; pointIndex < points.length; pointIndex += 1) {
         this.graphics.lineTo(points[pointIndex].x, points[pointIndex].y);
       }
       this.graphics.strokePath();
-      this.graphics.lineStyle(4, 0xffb0c0, 0.92);
+
+      this.graphics.lineStyle(innerWidth, 0xffa7ba, 0.94);
+      this.graphics.beginPath();
+      this.graphics.moveTo(points[0].x, points[0].y);
+      for (let pointIndex = 1; pointIndex < points.length; pointIndex += 1) {
+        this.graphics.lineTo(points[pointIndex].x, points[pointIndex].y);
+      }
+      this.graphics.strokePath();
+
+      this.graphics.lineStyle(hotCoreWidth, 0xffd4de, 0.38 + extend * 0.12);
       this.graphics.beginPath();
       this.graphics.moveTo(points[0].x, points[0].y);
       for (let pointIndex = 1; pointIndex < points.length; pointIndex += 1) {
@@ -179,8 +196,8 @@ export class AnemoneView {
 
       tipSprite.setVisible(true);
       tipSprite.setPosition(tip.x, tip.y);
-      tipSprite.setScale(0.72 + extend * 0.24);
-      tipSprite.setAlpha(0.7 + extend * 0.3);
+      tipSprite.setScale(0.7 + centerBias * 0.08 + extend * 0.24);
+      tipSprite.setAlpha(0.72 + extend * 0.28);
 
       if (nowMs >= tentacle.busyUntilMs) {
         tentacle.target = null;
