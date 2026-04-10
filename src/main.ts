@@ -11,8 +11,13 @@ const gameRoot = document.querySelector<HTMLDivElement>("#game-root");
 const scoreValue = document.querySelector<HTMLSpanElement>("#score-value");
 const bestValue = document.querySelector<HTMLSpanElement>("#best-value");
 const streakValue = document.querySelector<HTMLSpanElement>("#streak-value");
+const multiplierChip =
+  document.querySelector<HTMLDivElement>("#multiplier-chip");
 const multiplierValue =
   document.querySelector<HTMLSpanElement>("#multiplier-value");
+const multiplierBoostValue = document.querySelector<HTMLSpanElement>(
+  "#multiplier-boost-value"
+);
 const speciesChip = document.querySelector<HTMLDivElement>("#species-chip");
 const speciesValue = document.querySelector<HTMLSpanElement>("#species-value");
 const gameOverOverlay =
@@ -36,7 +41,9 @@ if (
   !scoreValue ||
   !bestValue ||
   !streakValue ||
+  !multiplierChip ||
   !multiplierValue ||
+  !multiplierBoostValue ||
   !speciesChip ||
   !speciesValue ||
   !gameOverOverlay ||
@@ -92,9 +99,15 @@ const updateHud = (snapshot: HudSnapshot): void => {
 
   if (snapshot.speciesBonusRemainingMs > 0) {
     speciesChip.classList.remove("hidden");
-    speciesValue.textContent = `${(snapshot.speciesBonusRemainingMs / 1000).toFixed(1)}s`;
+    const bonusText = `${(snapshot.speciesBonusRemainingMs / 1000).toFixed(1)}s`;
+    speciesValue.textContent = bonusText;
+    multiplierBoostValue.textContent = `Boost ${bonusText}`;
+    multiplierBoostValue.classList.remove("hidden");
+    multiplierChip.dataset.bonusActive = "true";
   } else {
     speciesChip.classList.add("hidden");
+    multiplierBoostValue.classList.add("hidden");
+    multiplierChip.dataset.bonusActive = "false";
   }
 
   if (snapshot.phase === "lost" && hasStarted) {

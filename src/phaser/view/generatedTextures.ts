@@ -260,6 +260,15 @@ const drawTire = (
   const centerX = 48;
   const centerY = 48;
   const rotation = Phaser.Math.DegToRad(frame * 18);
+  const warningColor = 0xc95a45;
+
+  graphics.lineStyle(4, warningColor, 0.95);
+  graphics.strokeEllipse(
+    centerX,
+    centerY,
+    70 + wobble * 0.2,
+    68 + wobble * 0.2
+  );
 
   graphics.lineStyle(13, colors.main, 1);
   graphics.strokeEllipse(
@@ -308,11 +317,21 @@ const drawAnchor = (
   wobble: number,
   colors: { main: number; alt: number; glow: number }
 ): void => {
+  const warningColor = 0xbb5642;
+
+  graphics.lineStyle(5, warningColor, 0.94);
+  graphics.strokeCircle(48, 20, 17);
   graphics.lineStyle(8, colors.main, 1);
   graphics.strokeCircle(48, 20, 12);
   graphics.beginPath();
   graphics.moveTo(48, 34);
   graphics.lineTo(48, 74);
+  graphics.strokePath();
+  graphics.lineStyle(16, warningColor, 0.6);
+  graphics.beginPath();
+  graphics.moveTo(20, 56);
+  graphics.lineTo(48, 84);
+  graphics.lineTo(76, 56);
   graphics.strokePath();
   graphics.lineStyle(12, colors.alt, 1);
   graphics.beginPath();
@@ -333,6 +352,10 @@ const drawPlate = (
   wobble: number,
   colors: { main: number; alt: number; glow: number }
 ): void => {
+  const warningColor = 0xc05844;
+
+  graphics.fillStyle(warningColor, 0.9);
+  graphics.fillRoundedRect(10, 20, 76, 52, 12);
   graphics.fillStyle(colors.main, 1);
   graphics.fillRoundedRect(14, 24, 68, 44, 10);
   graphics.lineStyle(3, colors.glow, 1);
@@ -540,7 +563,7 @@ const registerEnemyAnimations = (
     frames: Array.from({ length: 4 }, (_, index) => ({
       key: `${kind}-idle-${index}`
     })),
-    frameRate: 6,
+    frameRate: kind === "tire" || kind === "anchor" || kind === "plate" ? 3 : 6,
     repeat: -1
   });
 };

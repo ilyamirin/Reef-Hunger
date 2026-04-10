@@ -28,6 +28,7 @@ export interface UIBridge {
 type EnemyActor = {
   state: EnemyState;
   sprite: Phaser.GameObjects.Sprite;
+  idleTween?: Phaser.Tweens.Tween;
 };
 
 export class GameScene extends Phaser.Scene {
@@ -210,8 +211,9 @@ export class GameScene extends Phaser.Scene {
 
   private applyAttack(event: AttackEvent): void {
     const targetPoint = this.worldFromCell(event.cell);
+    const isJunkHit = event.resolution === "hit-hostile";
     this.anemone.attack(targetPoint, event.resolution, this.time.now);
-    this.spawnAttackFlash(targetPoint, event.resolution === "miss");
+    this.spawnAttackFlash(targetPoint, event.resolution === "miss", isJunkHit);
 
     if (event.resolution === "hit-edible") {
       this.audio.play("hitEdible");
@@ -236,6 +238,7 @@ export class GameScene extends Phaser.Scene {
     if (event.removedId) {
       const actor = this.enemyActors.get(event.removedId);
       if (actor) {
+        actor.idleTween?.stop();
         actor.state =
           this.engine
             .getState()
@@ -252,6 +255,7 @@ export class GameScene extends Phaser.Scene {
           onComplete: () => actor.sprite.destroy()
         });
       }
+      this.spawnScorePop(targetPoint, event.pointsGained, isJunkHit);
       this.emitBestScoreIfNeeded();
     } else if (event.resolution === "miss") {
       this.cameras.main.shake(70, 0.004);
@@ -298,9 +302,27 @@ export class GameScene extends Phaser.Scene {
       });
     }
 
+    const idleTween = enemy.edible
+      ? undefined
+      : this.tweens.add({
+          targets: sprite,
+          angle: sprite.angle + (enemy.kind === "anchor" ? 3 : 5),
+          y: world.y + this.layoutState.cellSize * 0.07,
+          duration:
+            enemy.kind === "anchor"
+              ? 2_250
+              : enemy.kind === "plate"
+                ? 1_950
+                : 1_650,
+          ease: "Sine.inOut",
+          yoyo: true,
+          repeat: -1
+        });
+
     this.enemyActors.set(enemy.id, {
       state: enemy,
-      sprite
+      sprite,
+      idleTween
     });
   }
 
@@ -350,13 +372,13 @@ export class GameScene extends Phaser.Scene {
     const isMobilePortrait =
       window.matchMedia("(pointer: coarse)").matches && height >= width;
     const safeTop = isMobilePortrait
-      ? Math.max(68, height * 0.1)
+      ? Math.max(58, height * 0.085)
       : Math.max(74, height * 0.12);
     const safeBottom = isMobilePortrait
-      ? Math.max(236, height * 0.32)
+      ? Math.max(154, height * 0.2)
       : Math.max(170, height * 0.24);
     const sidePadding = isMobilePortrait
-      ? Math.max(14, width * 0.04)
+      ? Math.max(8, width * 0.02)
       : Math.max(18, width * 0.05);
     const cellSize = Math.max(
       24,
@@ -368,7 +390,7 @@ export class GameScene extends Phaser.Scene {
       )
     );
     const adjustedCellSize = isMobilePortrait
-      ? Math.max(24, Math.floor(cellSize * 0.96))
+      ? Math.max(24, cellSize)
       : cellSize;
     const gridWidth = adjustedCellSize * 6;
     const gridHeight = adjustedCellSize * 8;
@@ -380,9 +402,9 @@ export class GameScene extends Phaser.Scene {
     this.layoutState.anemoneY =
       this.layoutState.gridY +
       gridHeight +
-      adjustedCellSize * (isMobilePortrait ? 0.72 : 0.9);
+      adjustedCellSize * (isMobilePortrait ? 0.46 : 0.9);
     this.layoutState.anemoneSize = isMobilePortrait
-      ? Math.max(92, adjustedCellSize * 1.9)
+      ? Math.max(84, adjustedCellSize * 1.58)
       : Math.max(112, adjustedCellSize * 2.25);
 
     this.drawBackground(width, height);
@@ -496,12 +518,16 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  private spawnAttackFlash(target: Phaser.Math.Vector2, miss: boolean): void {
+  private spawnAttackFlash(
+    target: Phaser.Math.Vector2,
+    miss: boolean,
+    junk = false
+  ): void {
     const flash = this.add.circle(
       target.x,
       target.y,
       this.layoutState.cellSize * 0.18,
-      miss ? 0xff9ca6 : 0x9dfff0,
+      miss ? 0xff9ca6 : junk ? 0xff6e6e : 0x9dfff0,
       0.72
     );
     flash.setDepth(6);
@@ -516,6 +542,42 @@ export class GameScene extends Phaser.Scene {
         Phaser.Utils.Array.Remove(this.attackFlashes, flash);
         flash.destroy();
       }
+    });
+  }
+
+  private spawnScorePop(
+    target: Phaser.Math.Vector2,
+    points: number,
+    negative: boolean
+  ): void {
+    if (points === 0) {
+      return;
+    }
+
+    const label = this.add.text(
+      target.x,
+      target.y - this.layoutState.cellSize * 0.12,
+      `${points > 0 ? "+" : ""}${points}`,
+      {
+        fontFamily: "Avenir Next, Trebuchet MS, Segoe UI, sans-serif",
+        fontSize: `${Math.max(18, Math.floor(this.layoutState.cellSize * 0.34))}px`,
+        fontStyle: "700",
+        color: negative ? "#ff8d7a" : "#a8fff1",
+        stroke: negative ? "#5a1620" : "#073042",
+        strokeThickness: 5
+      }
+    );
+    label.setOrigin(0.5);
+    label.setDepth(7);
+
+    this.tweens.add({
+      targets: label,
+      y: label.y - this.layoutState.cellSize * 0.42,
+      alpha: 0,
+      scale: negative ? 1.05 : 1.12,
+      duration: negative ? 430 : 360,
+      ease: "Sine.out",
+      onComplete: () => label.destroy()
     });
   }
 
@@ -545,6 +607,7 @@ export class GameScene extends Phaser.Scene {
 
   private clearActors(): void {
     for (const actor of this.enemyActors.values()) {
+      actor.idleTween?.stop();
       actor.sprite.destroy();
     }
     this.enemyActors.clear();
