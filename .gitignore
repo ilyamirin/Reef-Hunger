@@ -14,3 +14,8 @@ coverage
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+docs/anemone-visual-exploration/
+docs/hermit-anemone-diverse/
+docs/hermit-anemone-exploration/
+docs/hermit-anemone-refined/
+docs/shell-foot-anemone-exploration/
