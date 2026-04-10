@@ -2,6 +2,12 @@
 
 Reef Hunger is a fast mobile-first arcade game where a hungry anemone devours sea creatures on a falling tactical grid while dodging cursed ocean junk.
 
+## License
+
+Noncommercial use is permitted under [PolyForm Noncommercial 1.0.0](./LICENSE).
+
+Commercial use requires prior written permission from the author and a paid commercial license. See [COMMERCIAL.md](./COMMERCIAL.md).
+
 ## GitHub Pages
 
 The repo is configured for project-site deployment on GitHub Pages through GitHub Actions.
