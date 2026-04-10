@@ -30,9 +30,9 @@ Use these prompts with `replicate-nano-banana-pro-http` when replacing the proce
 
 `stylized 2D arcade diver enemy sprite sheet, compact wetsuit silhouette, readable fins and mask, blue-white glow accents, transparent background, no scenery, production game asset`
 
-## Sock
+## Tire
 
-`stylized 2D arcade drifting sock trap sprite sheet, readable silhouette, slightly absurd but clean, pale fabric with reef glow accents, transparent background, no scenery, production game asset`
+`stylized 2D arcade drifting car tire trap sprite sheet, chunky readable silhouette, old rubber with visible tread, transparent background, no scenery, production game asset`
 
 ## Anchor
 

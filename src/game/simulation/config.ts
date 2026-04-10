@@ -8,7 +8,7 @@ const weightTable = (
   starfish: 0,
   urchin: 0,
   diver: 0,
-  sock: 0,
+  tire: 0,
   anchor: 0,
   plate: 0,
   ...Object.fromEntries(entries)
@@ -66,7 +66,7 @@ export const GAME_CONFIG: GameConfig = {
         ["fish", 6],
         ["crab", 3],
         ["starfish", 2],
-        ["sock", 1]
+        ["tire", 1]
       ]),
       extraSpawnChance: 0.14
     },
@@ -77,7 +77,7 @@ export const GAME_CONFIG: GameConfig = {
         ["crab", 3],
         ["starfish", 3],
         ["urchin", 1],
-        ["sock", 1],
+        ["tire", 1],
         ["plate", 1]
       ]),
       extraSpawnChance: 0.2
@@ -90,7 +90,7 @@ export const GAME_CONFIG: GameConfig = {
         ["starfish", 3],
         ["urchin", 2],
         ["diver", 1],
-        ["sock", 1],
+        ["tire", 1],
         ["plate", 1],
         ["anchor", 1]
       ]),
@@ -128,8 +128,8 @@ export const GAME_CONFIG: GameConfig = {
       scoreValue: 260,
       edible: true
     },
-    sock: {
-      kind: "sock",
+    tire: {
+      kind: "tire",
       stepPattern: "chaos",
       scoreValue: -90,
       edible: false

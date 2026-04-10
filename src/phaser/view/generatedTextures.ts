@@ -13,9 +13,9 @@ const enemyColors: Record<
   starfish: { main: 0xffcd72, alt: 0xff8962, glow: 0xfff0b7 },
   urchin: { main: 0x9d85ff, alt: 0x4f43cb, glow: 0xd7cbff },
   diver: { main: 0x7bc0ff, alt: 0x204a87, glow: 0xdbf4ff },
-  sock: { main: 0xf1f3f4, alt: 0xc4ccd2, glow: 0xfefefe },
-  anchor: { main: 0x90a4b7, alt: 0x445d73, glow: 0xdce6ef },
-  plate: { main: 0xf9e98b, alt: 0x212121, glow: 0xfff6b8 }
+  tire: { main: 0x20242b, alt: 0x57606d, glow: 0x707b89 },
+  anchor: { main: 0xafc0d0, alt: 0x5c7590, glow: 0x0d2742 },
+  plate: { main: 0xf6e37a, alt: 0x181818, glow: 0xe9d35a }
 };
 
 const clearGraphics = (scene: Phaser.Scene): Phaser.GameObjects.Graphics =>
@@ -145,19 +145,59 @@ const drawDiver = (
   graphics.fillRoundedRect(38, 24, 20, 10, 5);
 };
 
-const drawSock = (
+const drawTire = (
   graphics: Phaser.GameObjects.Graphics,
   wobble: number,
   colors: { main: number; alt: number; glow: number }
 ): void => {
-  graphics.fillStyle(colors.glow, 0.12);
-  graphics.fillRoundedRect(20, 14, 48, 66, 18);
   graphics.fillStyle(colors.main, 1);
-  graphics.fillRoundedRect(30, 18, 30, 48, 12);
-  graphics.fillRoundedRect(26, 52, 40, 22, 10);
-  graphics.fillStyle(colors.alt, 1);
-  graphics.fillRoundedRect(30, 18, 30, 10, 4);
-  graphics.fillEllipse(58 + wobble, 72, 26, 18);
+  graphics.fillEllipse(48, 48, 66 + wobble * 0.3, 64 + wobble * 0.3);
+  graphics.fillStyle(0x0e1218, 1);
+  graphics.fillEllipse(48, 48, 46, 44);
+  graphics.fillStyle(0x2c3139, 1);
+  graphics.fillCircle(48, 48, 16);
+  graphics.fillStyle(0x101419, 1);
+  graphics.fillCircle(48, 48, 7);
+
+  graphics.lineStyle(6, colors.alt, 1);
+  graphics.beginPath();
+  graphics.moveTo(48, 16);
+  graphics.lineTo(48, 28);
+  graphics.moveTo(48, 68);
+  graphics.lineTo(48, 80);
+  graphics.moveTo(16, 48);
+  graphics.lineTo(28, 48);
+  graphics.moveTo(68, 48);
+  graphics.lineTo(80, 48);
+  graphics.moveTo(24, 24);
+  graphics.lineTo(33, 33);
+  graphics.moveTo(63, 63);
+  graphics.lineTo(72, 72);
+  graphics.moveTo(63, 33);
+  graphics.lineTo(72, 24);
+  graphics.moveTo(24, 72);
+  graphics.lineTo(33, 63);
+  graphics.strokePath();
+
+  graphics.lineStyle(4, colors.glow, 1);
+  graphics.beginPath();
+  graphics.moveTo(36, 18);
+  graphics.lineTo(40, 32);
+  graphics.moveTo(60, 18);
+  graphics.lineTo(56, 32);
+  graphics.moveTo(75, 36);
+  graphics.lineTo(61, 40);
+  graphics.moveTo(75, 60);
+  graphics.lineTo(61, 56);
+  graphics.moveTo(36, 78);
+  graphics.lineTo(40, 64);
+  graphics.moveTo(60, 78);
+  graphics.lineTo(56, 64);
+  graphics.moveTo(21, 36);
+  graphics.lineTo(35, 40);
+  graphics.moveTo(21, 60);
+  graphics.lineTo(35, 56);
+  graphics.strokePath();
 };
 
 const drawAnchor = (
@@ -166,23 +206,22 @@ const drawAnchor = (
   colors: { main: number; alt: number; glow: number }
 ): void => {
   graphics.lineStyle(8, colors.main, 1);
-  graphics.strokeCircle(48, 22, 10);
+  graphics.strokeCircle(48, 20, 12);
   graphics.beginPath();
-  graphics.moveTo(48, 32);
-  graphics.lineTo(48, 72);
+  graphics.moveTo(48, 34);
+  graphics.lineTo(48, 74);
   graphics.strokePath();
-  graphics.lineStyle(10, colors.alt, 1);
+  graphics.lineStyle(12, colors.alt, 1);
   graphics.beginPath();
-  graphics.moveTo(24, 54);
-  graphics.lineTo(48, 72);
-  graphics.lineTo(72, 54);
+  graphics.moveTo(20, 56);
+  graphics.lineTo(48, 84);
+  graphics.lineTo(76, 56);
   graphics.strokePath();
   graphics.lineStyle(6, colors.main, 1);
   graphics.beginPath();
-  graphics.moveTo(28, 54);
-  graphics.lineTo(18, 74 - wobble);
-  graphics.moveTo(68, 54);
-  graphics.lineTo(78, 74 + wobble);
+  graphics.moveTo(18, 56);
+  graphics.lineTo(48, 84);
+  graphics.lineTo(78, 56);
   graphics.strokePath();
 };
 
@@ -191,17 +230,22 @@ const drawPlate = (
   wobble: number,
   colors: { main: number; alt: number; glow: number }
 ): void => {
-  graphics.fillStyle(colors.glow, 0.14);
-  graphics.fillRoundedRect(16, 28, 64, 40, 10);
   graphics.fillStyle(colors.main, 1);
-  graphics.fillRoundedRect(18, 30, 60, 36, 8);
+  graphics.fillRoundedRect(14, 24, 68, 44, 10);
+  graphics.lineStyle(3, colors.glow, 1);
+  graphics.strokeRoundedRect(14, 24, 68, 44, 10);
+  graphics.fillStyle(0x8b7718, 1);
+  graphics.fillCircle(24, 34, 2.5);
+  graphics.fillCircle(72, 34, 2.5);
+  graphics.fillStyle(0x3c320a, 1);
+  graphics.fillRect(28, 36, 8, 4);
+  graphics.fillRect(40, 36, 8, 4);
+  graphics.fillRect(52, 36, 8, 4);
+  graphics.fillRect(64, 36, 8, 4);
   graphics.fillStyle(colors.alt, 1);
-  graphics.fillRect(26, 40, 8, 4);
-  graphics.fillRect(38, 40, 8, 4);
-  graphics.fillRect(50, 40, 8, 4);
-  graphics.fillRect(62, 40, 8, 4);
-  graphics.fillRect(32, 50, 10, 4);
-  graphics.fillRect(46, 50, 10 + wobble * 0.4, 4);
+  graphics.fillRect(30, 50, 10, 5);
+  graphics.fillRect(44, 50, 12, 5);
+  graphics.fillRect(60, 50, 10 + wobble * 0.3, 5);
 };
 
 const drawAnemoneBody = (
@@ -269,8 +313,8 @@ export const registerGeneratedTextures = (scene: Phaser.Scene): void => {
           case "diver":
             drawDiver(graphics, wobble, colors);
             break;
-          case "sock":
-            drawSock(graphics, wobble, colors);
+          case "tire":
+            drawTire(graphics, wobble, colors);
             break;
           case "anchor":
             drawAnchor(graphics, wobble, colors);
