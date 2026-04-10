@@ -65,7 +65,7 @@ const updateHud = (snapshot: HudSnapshot): void => {
 
   if (snapshot.phase === "lost" && hasStarted) {
     gameOverOverlay.classList.remove("hidden");
-    gameOverScore.textContent = `Score ${snapshot.score} • Best ${snapshot.bestScore}`;
+    gameOverScore.textContent = `SCORE ${snapshot.score} · BEST ${snapshot.bestScore}`;
   } else {
     gameOverOverlay.classList.add("hidden");
   }

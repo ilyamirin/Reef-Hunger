@@ -147,6 +147,11 @@ button {
   cursor: pointer;
 }
 
+.control-button:hover,
+.control-button:focus-visible {
+  transform: translateY(-1px);
+}
+
 .control-button.large {
   min-width: 180px;
   padding: 14px 22px;
@@ -155,6 +160,29 @@ button {
     rgba(21, 92, 114, 0.94),
     rgba(11, 41, 74, 0.95)
   );
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.control-button.icon-button {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 44, 72, 0.9),
+    rgba(5, 24, 43, 0.94)
+  );
+}
+
+.button-icon {
+  display: block;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .overlay {
@@ -190,6 +218,7 @@ button {
 
 .overlay-card.hero {
   max-width: 340px;
+  padding: 28px 22px 24px;
 }
 
 .overlay-kicker {
@@ -202,24 +231,82 @@ button {
 
 .overlay h1,
 .overlay h2 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-weight: 700;
+}
+
+.overlay h1 {
+  font-size: clamp(34px, 10vw, 48px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.overlay h2 {
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .overlay p {
   margin: 0 0 18px;
   color: var(--text-dim);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .overlay-score {
   color: var(--accent-hot);
   font-size: 18px;
+  letter-spacing: 0.16em;
 }
 
 #start-overlay p {
   max-width: 26ch;
   margin-left: auto;
   margin-right: auto;
+}
+
+.reef-mark {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  margin: 0 auto 16px;
+  width: fit-content;
+}
+
+.reef-mark span {
+  display: block;
+  width: 10px;
+  border-radius: 999px 999px 10px 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(122, 246, 217, 0.95),
+    rgba(67, 180, 193, 0.68)
+  );
+}
+
+.reef-mark span:nth-child(1) {
+  height: 26px;
+  transform: rotate(-16deg);
+}
+
+.reef-mark span:nth-child(2) {
+  height: 38px;
+}
+
+.reef-mark span:nth-child(3) {
+  height: 30px;
+  transform: rotate(16deg);
+}
+
+.reef-mark.danger span {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 141, 161, 0.95),
+    rgba(255, 211, 143, 0.72)
+  );
 }
 
 .game-credit-strip {

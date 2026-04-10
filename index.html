@@ -76,8 +76,13 @@
               <span class="chip-label">Best</span>
               <span id="best-value" class="chip-value">0</span>
             </div>
-            <button id="restart-button" class="control-button" type="button">
-              Restart
+            <button
+              id="restart-button"
+              class="control-button icon-button"
+              type="button"
+              aria-label="Restart run"
+            >
+              <span class="button-icon" aria-hidden="true">⟳</span>
             </button>
           </div>
 
@@ -98,45 +103,49 @@
         </div>
 
         <div id="start-overlay" class="overlay">
-          <div class="overlay-card">
-            <div class="overlay-kicker">Reef Hunger</div>
-            <h1>Dive In</h1>
-            <p>
-              Devour the living reef, dodge cursed ocean junk, and keep the grid
-              under control.
-            </p>
+          <div class="overlay-card hero">
+            <div class="reef-mark" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="overlay-kicker">Arcade Reef</div>
+            <h1>REEF HUNGER</h1>
+            <p>Tap to Hunt</p>
             <button
               id="start-button"
               class="control-button large"
               type="button"
             >
-              Start Hunt
+              HUNT
             </button>
           </div>
         </div>
 
         <div id="game-over-overlay" class="overlay hidden">
-          <div class="overlay-card">
-            <div class="overlay-kicker">The reef pushed through</div>
-            <h1>Run Over</h1>
-            <p id="game-over-score" class="overlay-score">Score 0 • Best 0</p>
+          <div class="overlay-card hero">
+            <div class="reef-mark danger" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="overlay-kicker">Run Ended</div>
+            <h1>OVER</h1>
+            <p id="game-over-score" class="overlay-score">SCORE 0 · BEST 0</p>
             <button
               id="overlay-restart-button"
               class="control-button large"
               type="button"
             >
-              Dive Again
+              AGAIN
             </button>
           </div>
         </div>
 
         <div id="orientation-overlay" class="overlay hidden">
           <div class="overlay-card compact">
-            <div class="overlay-kicker">Portrait only</div>
-            <h2>Turn the device upright</h2>
-            <p>
-              The anemone holds position until the screen is back in portrait.
-            </p>
+            <div class="overlay-kicker">Portrait Only</div>
+            <h2>TURN UPRIGHT</h2>
           </div>
         </div>
 
