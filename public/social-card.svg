@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgDeep" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#082340" />
+      <stop offset="45%" stop-color="#093052" />
+      <stop offset="100%" stop-color="#02101b" />
+    </linearGradient>
+    <radialGradient id="glowAqua" cx="68%" cy="18%" r="38%">
+      <stop offset="0%" stop-color="#69f6de" stop-opacity="0.42" />
+      <stop offset="70%" stop-color="#69f6de" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="18%" cy="22%" r="32%">
+      <stop offset="0%" stop-color="#3cbbe5" stop-opacity="0.34" />
+      <stop offset="70%" stop-color="#3cbbe5" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="surface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b6ffff" />
+      <stop offset="100%" stop-color="#61d7f0" />
+    </linearGradient>
+    <linearGradient id="anemoneBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff6b9e" />
+      <stop offset="100%" stop-color="#b92458" />
+    </linearGradient>
+    <linearGradient id="anemoneFoot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5e1a2b" />
+      <stop offset="100%" stop-color="#231019" />
+    </linearGradient>
+    <linearGradient id="tentacle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd4f0" />
+      <stop offset="100%" stop-color="#ff91ce" />
+    </linearGradient>
+    <linearGradient id="tentacleHot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffc7e6" />
+      <stop offset="100%" stop-color="#ef68af" />
+    </linearGradient>
+    <linearGradient id="fishMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#64f2d9" />
+      <stop offset="100%" stop-color="#1aa3b2" />
+    </linearGradient>
+    <linearGradient id="crabMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8e73" />
+      <stop offset="100%" stop-color="#d84b59" />
+    </linearGradient>
+    <linearGradient id="starMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffcd72" />
+      <stop offset="100%" stop-color="#ff8962" />
+    </linearGradient>
+    <linearGradient id="urchinMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7c7da" />
+      <stop offset="100%" stop-color="#d97a97" />
+    </linearGradient>
+    <linearGradient id="whaleMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#73c3f6" />
+      <stop offset="100%" stop-color="#4c98d3" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#000000" flood-opacity="0.28" />
+    </filter>
+    <filter id="softText" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#02101b" flood-opacity="0.38" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgDeep)" />
+  <rect width="1200" height="630" fill="url(#glowAqua)" />
+  <rect width="1200" height="630" fill="url(#glowBlue)" />
+
+  <path d="M0 118 C156 78 301 74 448 95 C612 118 787 128 954 98 C1056 79 1138 58 1200 46 V0 H0 Z" fill="#0d5c8c" fill-opacity="0.34" />
+  <path d="M0 148 C160 104 310 99 468 120 C622 141 779 146 948 121 C1046 107 1127 90 1200 73" fill="none" stroke="url(#surface)" stroke-width="12" stroke-linecap="round" opacity="0.88" />
+
+  <g opacity="0.12">
+    <path d="M710 168 V430" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M784 168 V430" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M858 168 V430" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M932 168 V430" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M1006 168 V430" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M1080 168 V430" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M710 168 H1080" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M710 231 H1080" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M710 294 H1080" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M710 357 H1080" stroke="#8ce8ff" stroke-width="2" />
+    <path d="M710 420 H1080" stroke="#8ce8ff" stroke-width="2" />
+  </g>
+
+  <g filter="url(#shadow)">
+    <ellipse cx="921" cy="560" rx="300" ry="58" fill="#0b2637" fill-opacity="0.62" />
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M802 540 C798 498 810 455 834 420 C860 382 897 364 936 368 C977 372 1011 396 1026 438 C1039 474 1035 509 1028 540 Z" fill="url(#anemoneBody)" />
+    <ellipse cx="915" cy="544" rx="142" ry="30" fill="url(#anemoneFoot)" />
+
+    <path d="M760 484 C778 434 806 402 843 379" fill="none" stroke="url(#tentacle)" stroke-width="18" stroke-linecap="round" />
+    <path d="M792 468 C805 415 828 379 861 350" fill="none" stroke="url(#tentacle)" stroke-width="18" stroke-linecap="round" />
+    <path d="M836 455 C844 398 862 361 890 329" fill="none" stroke="url(#tentacleHot)" stroke-width="18" stroke-linecap="round" />
+    <path d="M884 451 C891 392 908 353 934 320" fill="none" stroke="url(#tentacleHot)" stroke-width="18" stroke-linecap="round" />
+    <path d="M934 454 C949 399 972 363 1002 338" fill="none" stroke="url(#tentacle)" stroke-width="18" stroke-linecap="round" />
+    <path d="M980 468 C1003 424 1032 395 1065 380" fill="none" stroke="url(#tentacle)" stroke-width="18" stroke-linecap="round" />
+    <path d="M749 516 C769 482 788 462 810 450" fill="none" stroke="url(#tentacleHot)" stroke-width="15" stroke-linecap="round" />
+    <path d="M1003 520 C1028 486 1054 464 1082 453" fill="none" stroke="url(#tentacleHot)" stroke-width="15" stroke-linecap="round" />
+  </g>
+
+  <g transform="translate(920 176) rotate(-10)">
+    <ellipse cx="0" cy="0" rx="50" ry="32" fill="url(#fishMain)" />
+    <path d="M-26 0 L-58 -20 L-58 20 Z" fill="#1aa3b2" />
+    <path d="M2 -14 L18 -34 L34 -14 Z" fill="#1aa3b2" />
+    <circle cx="18" cy="-5" r="6" fill="#ffffff" fill-opacity="0.88" />
+    <circle cx="20" cy="-5" r="2.8" fill="#052134" />
+  </g>
+
+  <g transform="translate(1018 240) rotate(8)">
+    <ellipse cx="0" cy="10" rx="44" ry="26" fill="url(#crabMain)" />
+    <path d="M-24 6 L-52 -22 L-36 16 Z" fill="#d84b59" />
+    <path d="M24 6 L52 -22 L36 16 Z" fill="#d84b59" />
+    <rect x="-39" y="20" width="10" height="24" rx="4" fill="#d84b59" />
+    <rect x="-16" y="26" width="10" height="20" rx="4" fill="#d84b59" />
+    <rect x="6" y="26" width="10" height="20" rx="4" fill="#d84b59" />
+    <rect x="29" y="20" width="10" height="24" rx="4" fill="#d84b59" />
+    <rect x="-13" y="-18" width="7" height="16" rx="3.5" fill="#d84b59" />
+    <rect x="8" y="-18" width="7" height="16" rx="3.5" fill="#d84b59" />
+    <circle cx="-9.5" cy="-22" r="5.5" fill="#ffffff" fill-opacity="0.9" />
+    <circle cx="11.5" cy="-22" r="5.5" fill="#ffffff" fill-opacity="0.9" />
+  </g>
+
+  <g transform="translate(781 271) rotate(14)">
+    <path d="M0 -45 L14 -10 L50 -8 L20 14 L30 50 L0 28 L-30 50 L-20 14 L-50 -8 L-14 -10 Z" fill="url(#starMain)" />
+    <circle cx="0" cy="3" r="15" fill="#ff8962" fill-opacity="0.9" />
+  </g>
+
+  <g transform="translate(1082 155)">
+    <ellipse cx="0" cy="14" rx="38" ry="22" fill="#6d2341" />
+    <ellipse cx="0" cy="6" rx="43" ry="28" fill="url(#urchinMain)" />
+    <ellipse cx="-8" cy="-1" rx="14" ry="8" fill="#f7dce6" fill-opacity="0.9" />
+    <g stroke="#f7c7da" stroke-width="6" stroke-linecap="round">
+      <path d="M-8 -8 L-32 -34" />
+      <path d="M6 -10 L8 -42" />
+      <path d="M18 -8 L42 -32" />
+      <path d="M28 4 L56 -4" />
+      <path d="M22 18 L42 42" />
+      <path d="M5 24 L4 50" />
+      <path d="M-12 24 L-32 42" />
+      <path d="M-27 10 L-52 20" />
+    </g>
+  </g>
+
+  <g transform="translate(738 184) rotate(-8)">
+    <path d="M-52 14 L-34 -8 L-6 -18 L30 -22 L50 -14 L56 2 L54 24 L44 44 L30 60 L4 70 L-24 72 L-42 60 L-50 42 Z" fill="url(#whaleMain)" />
+    <path d="M-12 -2 L2 -14 L24 -18 L44 -16 L50 -2 L46 16 L24 18 L2 14 Z" fill="#edf9ff" fill-opacity="0.92" />
+    <path d="M34 42 L56 26 L52 54 Z" fill="#4c98d3" />
+    <path d="M-10 56 L-28 72 L-22 48 Z" fill="#4c98d3" />
+    <path d="M18 56 L38 74 L28 48 Z" fill="#4c98d3" />
+    <circle cx="-18" cy="8" r="8" fill="#f8fdff" />
+    <circle cx="-14" cy="11" r="3.5" fill="#06111d" />
+  </g>
+
+  <g filter="url(#softText)">
+    <text x="88" y="168" fill="#86ffde" font-size="28" letter-spacing="0.28em" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">MOBILE ARCADE</text>
+    <text x="86" y="272" fill="#effcff" font-size="108" font-weight="800" letter-spacing="0.02em" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">Reef Hunger</text>
+    <text x="90" y="352" fill="#ffd995" font-size="44" font-weight="700" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">Feed the anemone. Hold the reef.</text>
+    <text x="92" y="420" fill="#d1ebf6" font-size="32" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">Tap fast. Chain kills. Dodge cursed ocean junk.</text>
+  </g>
+
+  <g opacity="0.82">
+    <rect x="92" y="462" width="140" height="44" rx="22" fill="#0f3450" stroke="#7af6d9" stroke-opacity="0.32" />
+    <text x="162" y="491" fill="#effcff" font-size="22" text-anchor="middle" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">6×8 grid</text>
+    <rect x="248" y="462" width="198" height="44" rx="22" fill="#0f3450" stroke="#7af6d9" stroke-opacity="0.32" />
+    <text x="347" y="491" fill="#effcff" font-size="22" text-anchor="middle" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">combo pressure</text>
+    <rect x="462" y="462" width="206" height="44" rx="22" fill="#0f3450" stroke="#7af6d9" stroke-opacity="0.32" />
+    <text x="565" y="491" fill="#effcff" font-size="22" text-anchor="middle" font-family="Avenir Next, Trebuchet MS, Segoe UI, sans-serif">one-tap attacks</text>
+  </g>
+</svg>
