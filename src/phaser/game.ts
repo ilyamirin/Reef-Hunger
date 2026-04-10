@@ -5,6 +5,7 @@ import { GameScene, type UIBridge } from "./scenes/GameScene";
 export class ReefHungerGame {
   private readonly game: Phaser.Game;
   private scene: GameScene | null = null;
+  private suspended = false;
 
   public constructor(parent: HTMLElement, bridge: UIBridge) {
     this.game = new Phaser.Game({
@@ -26,6 +27,7 @@ export class ReefHungerGame {
         new BootScene(),
         new GameScene(bridge, (scene) => {
           this.scene = scene;
+          this.scene.setSuspended(this.suspended);
         })
       ]
     });
@@ -36,6 +38,7 @@ export class ReefHungerGame {
   }
 
   public setSuspended(suspended: boolean): void {
+    this.suspended = suspended;
     this.scene?.setSuspended(suspended);
   }
 

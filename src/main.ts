@@ -17,6 +17,8 @@ const gameOverScore =
 const orientationOverlay = document.querySelector<HTMLDivElement>(
   "#orientation-overlay"
 );
+const startOverlay = document.querySelector<HTMLDivElement>("#start-overlay");
+const startButton = document.querySelector<HTMLButtonElement>("#start-button");
 const restartButton =
   document.querySelector<HTMLButtonElement>("#restart-button");
 const overlayRestartButton = document.querySelector<HTMLButtonElement>(
@@ -34,11 +36,15 @@ if (
   !gameOverOverlay ||
   !gameOverScore ||
   !orientationOverlay ||
+  !startOverlay ||
+  !startButton ||
   !restartButton ||
   !overlayRestartButton
 ) {
   throw new Error("HUD elements are missing from index.html");
 }
+
+let hasStarted = false;
 
 const updateHud = (snapshot: HudSnapshot): void => {
   scoreValue.textContent = String(snapshot.score);
@@ -53,7 +59,7 @@ const updateHud = (snapshot: HudSnapshot): void => {
     speciesChip.classList.add("hidden");
   }
 
-  if (snapshot.phase === "lost") {
+  if (snapshot.phase === "lost" && hasStarted) {
     gameOverOverlay.classList.remove("hidden");
     gameOverScore.textContent = `Score ${snapshot.score} • Best ${snapshot.bestScore}`;
   } else {
@@ -65,18 +71,39 @@ const reefGame = new ReefHungerGame(gameRoot, {
   onHudUpdate: updateHud
 });
 
-const refreshOrientation = (): void => {
+const syncOverlays = (): void => {
   const isPortrait = window.innerHeight >= window.innerWidth;
+  const shouldSuspend =
+    !hasStarted || !isPortrait || document.visibilityState !== "visible";
+
   orientationOverlay.classList.toggle("hidden", isPortrait);
-  reefGame.setSuspended(!isPortrait || document.visibilityState !== "visible");
+  startOverlay.classList.toggle("hidden", hasStarted);
+  reefGame.setSuspended(shouldSuspend);
+};
+
+const startRun = (): void => {
+  hasStarted = true;
+  startOverlay.classList.add("hidden");
+  gameOverOverlay.classList.add("hidden");
+  syncOverlays();
 };
 
 restartButton.addEventListener("click", () => {
+  hasStarted = true;
   reefGame.restart();
+  gameOverOverlay.classList.add("hidden");
+  syncOverlays();
 });
 
 overlayRestartButton.addEventListener("click", () => {
+  hasStarted = true;
   reefGame.restart();
+  gameOverOverlay.classList.add("hidden");
+  syncOverlays();
+});
+
+startButton.addEventListener("click", () => {
+  startRun();
 });
 
 window.addEventListener(
@@ -87,8 +114,9 @@ window.addEventListener(
   { passive: false }
 );
 
-window.addEventListener("resize", refreshOrientation);
-window.addEventListener("orientationchange", refreshOrientation);
-document.addEventListener("visibilitychange", refreshOrientation);
+window.addEventListener("resize", syncOverlays);
+window.addEventListener("orientationchange", syncOverlays);
+document.addEventListener("visibilitychange", syncOverlays);
 
-refreshOrientation();
+document.body.classList.remove("booting");
+syncOverlays();
