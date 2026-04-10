@@ -6,8 +6,10 @@ export class ReefHungerGame {
   private readonly game: Phaser.Game;
   private scene: GameScene | null = null;
   private suspended = false;
+  private readonly parent: HTMLElement;
 
   public constructor(parent: HTMLElement, bridge: UIBridge) {
+    this.parent = parent;
     this.game = new Phaser.Game({
       type: Phaser.AUTO,
       parent,
@@ -44,6 +46,10 @@ export class ReefHungerGame {
   public setSuspended(suspended: boolean): void {
     this.suspended = suspended;
     this.scene?.setSuspended(suspended);
+  }
+
+  public resize(): void {
+    this.game.scale.resize(this.parent.clientWidth, this.parent.clientHeight);
   }
 
   public destroy(): void {

@@ -347,25 +347,43 @@ export class GameScene extends Phaser.Scene {
   }
 
   private layoutScene(width: number, height: number): void {
-    const safeTop = Math.max(74, height * 0.12);
-    const safeBottom = Math.max(170, height * 0.24);
-    const sidePadding = Math.max(18, width * 0.05);
-    const cellSize = Math.floor(
-      Math.min(
-        (width - sidePadding * 2) / 6,
-        (height - safeTop - safeBottom) / 8
+    const isMobilePortrait =
+      window.matchMedia("(pointer: coarse)").matches && height >= width;
+    const safeTop = isMobilePortrait
+      ? Math.max(68, height * 0.1)
+      : Math.max(74, height * 0.12);
+    const safeBottom = isMobilePortrait
+      ? Math.max(236, height * 0.32)
+      : Math.max(170, height * 0.24);
+    const sidePadding = isMobilePortrait
+      ? Math.max(14, width * 0.04)
+      : Math.max(18, width * 0.05);
+    const cellSize = Math.max(
+      24,
+      Math.floor(
+        Math.min(
+          (width - sidePadding * 2) / 6,
+          (height - safeTop - safeBottom) / 8
+        )
       )
     );
-    const gridWidth = cellSize * 6;
-    const gridHeight = cellSize * 8;
+    const adjustedCellSize = isMobilePortrait
+      ? Math.max(24, Math.floor(cellSize * 0.96))
+      : cellSize;
+    const gridWidth = adjustedCellSize * 6;
+    const gridHeight = adjustedCellSize * 8;
 
-    this.layoutState.cellSize = cellSize;
+    this.layoutState.cellSize = adjustedCellSize;
     this.layoutState.gridX = Math.floor((width - gridWidth) / 2);
     this.layoutState.gridY = Math.floor(safeTop);
     this.layoutState.anemoneX = width / 2;
     this.layoutState.anemoneY =
-      this.layoutState.gridY + gridHeight + cellSize * 0.9;
-    this.layoutState.anemoneSize = Math.max(112, cellSize * 2.25);
+      this.layoutState.gridY +
+      gridHeight +
+      adjustedCellSize * (isMobilePortrait ? 0.72 : 0.9);
+    this.layoutState.anemoneSize = isMobilePortrait
+      ? Math.max(92, adjustedCellSize * 1.9)
+      : Math.max(112, adjustedCellSize * 2.25);
 
     this.drawBackground(width, height);
     this.drawGrid(gridWidth, gridHeight);
@@ -378,7 +396,10 @@ export class GameScene extends Phaser.Scene {
     for (const actor of this.enemyActors.values()) {
       const position = this.worldFromCell(actor.state.cell);
       actor.sprite.setPosition(position.x, position.y);
-      actor.sprite.setDisplaySize(cellSize * 0.84, cellSize * 0.84);
+      actor.sprite.setDisplaySize(
+        adjustedCellSize * 0.84,
+        adjustedCellSize * 0.84
+      );
     }
   }
 

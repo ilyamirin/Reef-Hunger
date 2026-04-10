@@ -2,6 +2,11 @@ import "./style.css";
 import type { HudSnapshot } from "./game/simulation/types";
 import { ReefHungerGame } from "./phaser/game";
 
+type GamePhase = HudSnapshot["phase"] | "boot";
+
+const rootElement = document.documentElement;
+const bodyElement = document.body;
+const gameShell = document.querySelector<HTMLDivElement>("#game-shell");
 const gameRoot = document.querySelector<HTMLDivElement>("#game-root");
 const scoreValue = document.querySelector<HTMLSpanElement>("#score-value");
 const bestValue = document.querySelector<HTMLSpanElement>("#best-value");
@@ -26,6 +31,7 @@ const overlayRestartButton = document.querySelector<HTMLButtonElement>(
 );
 
 if (
+  !gameShell ||
   !gameRoot ||
   !scoreValue ||
   !bestValue ||
@@ -45,12 +51,40 @@ if (
 }
 
 let hasStarted = false;
+let currentPhase: GamePhase = "boot";
 
 const shouldEnforcePortrait = (): boolean =>
   window.matchMedia("(pointer: coarse)").matches ||
   navigator.maxTouchPoints > 0;
 
+const isMobilePortrait = (): boolean =>
+  shouldEnforcePortrait() && window.innerHeight >= window.innerWidth;
+
+const applyViewportHeight = (): void => {
+  const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+  rootElement.style.setProperty(
+    "--app-height",
+    `${Math.round(viewportHeight)}px`
+  );
+};
+
+const syncShellState = (): void => {
+  const showOrientationOverlay = shouldEnforcePortrait() && !isMobilePortrait();
+  const isRunning =
+    hasStarted &&
+    currentPhase === "running" &&
+    !showOrientationOverlay &&
+    document.visibilityState === "visible";
+
+  bodyElement.classList.toggle("coarse-portrait", isMobilePortrait());
+  bodyElement.classList.toggle("game-running", isRunning);
+  bodyElement.dataset.gamePhase = currentPhase;
+};
+
+applyViewportHeight();
+
 const updateHud = (snapshot: HudSnapshot): void => {
+  currentPhase = snapshot.phase;
   scoreValue.textContent = String(snapshot.score);
   bestValue.textContent = String(snapshot.bestScore);
   streakValue.textContent = String(snapshot.streak);
@@ -69,6 +103,8 @@ const updateHud = (snapshot: HudSnapshot): void => {
   } else {
     gameOverOverlay.classList.add("hidden");
   }
+
+  syncShellState();
 };
 
 const reefGame = new ReefHungerGame(gameRoot, {
@@ -76,8 +112,7 @@ const reefGame = new ReefHungerGame(gameRoot, {
 });
 
 const syncOverlays = (): void => {
-  const isPortrait = window.innerHeight >= window.innerWidth;
-  const showOrientationOverlay = shouldEnforcePortrait() && !isPortrait;
+  const showOrientationOverlay = shouldEnforcePortrait() && !isMobilePortrait();
   const shouldSuspend =
     !hasStarted ||
     showOrientationOverlay ||
@@ -86,6 +121,13 @@ const syncOverlays = (): void => {
   orientationOverlay.classList.toggle("hidden", !showOrientationOverlay);
   startOverlay.classList.toggle("hidden", hasStarted);
   reefGame.setSuspended(shouldSuspend);
+  syncShellState();
+};
+
+const syncViewport = (): void => {
+  applyViewportHeight();
+  reefGame.resize();
+  syncOverlays();
 };
 
 const startRun = (): void => {
@@ -114,16 +156,19 @@ startButton.addEventListener("click", () => {
   startRun();
 });
 
-window.addEventListener(
+gameShell.addEventListener(
   "touchmove",
   (event) => {
-    event.preventDefault();
+    if (bodyElement.classList.contains("game-running")) {
+      event.preventDefault();
+    }
   },
   { passive: false }
 );
 
-window.addEventListener("resize", syncOverlays);
-window.addEventListener("orientationchange", syncOverlays);
+window.addEventListener("resize", syncViewport);
+window.addEventListener("orientationchange", syncViewport);
+window.visualViewport?.addEventListener("resize", syncViewport);
 document.addEventListener("visibilitychange", syncOverlays);
 
 document.body.classList.remove("booting");
