@@ -46,6 +46,10 @@ if (
 
 let hasStarted = false;
 
+const shouldEnforcePortrait = (): boolean =>
+  window.matchMedia("(pointer: coarse)").matches ||
+  navigator.maxTouchPoints > 0;
+
 const updateHud = (snapshot: HudSnapshot): void => {
   scoreValue.textContent = String(snapshot.score);
   bestValue.textContent = String(snapshot.bestScore);
@@ -73,10 +77,13 @@ const reefGame = new ReefHungerGame(gameRoot, {
 
 const syncOverlays = (): void => {
   const isPortrait = window.innerHeight >= window.innerWidth;
+  const showOrientationOverlay = shouldEnforcePortrait() && !isPortrait;
   const shouldSuspend =
-    !hasStarted || !isPortrait || document.visibilityState !== "visible";
+    !hasStarted ||
+    showOrientationOverlay ||
+    document.visibilityState !== "visible";
 
-  orientationOverlay.classList.toggle("hidden", isPortrait);
+  orientationOverlay.classList.toggle("hidden", !showOrientationOverlay);
   startOverlay.classList.toggle("hidden", hasStarted);
   reefGame.setSuspended(shouldSuspend);
 };
