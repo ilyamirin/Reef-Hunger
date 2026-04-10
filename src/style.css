@@ -353,6 +353,26 @@ button {
   display: none;
 }
 
+@media (min-width: 960px) {
+  .top-row {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .bottom-row {
+    left: 50%;
+    right: auto;
+    width: fit-content;
+    max-width: min(calc(100vw - 64px), 540px);
+    transform: translateX(-50%);
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
 @media (max-height: 720px) {
   .chip {
     padding: 9px 12px;
