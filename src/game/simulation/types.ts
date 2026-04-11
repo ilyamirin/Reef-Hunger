@@ -8,7 +8,13 @@ export type EnemyKind =
   | "anchor"
   | "plate";
 
-export type StepPattern = "drift" | "scuttle" | "chaos" | "pulse" | "zigzag";
+export type StepPattern =
+  | "drift"
+  | "scuttle"
+  | "chaos"
+  | "pulse"
+  | "zigzag"
+  | "bounce";
 
 export interface GridCell {
   col: number;

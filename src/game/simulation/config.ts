@@ -130,7 +130,7 @@ export const GAME_CONFIG: GameConfig = {
     },
     tire: {
       kind: "tire",
-      stepPattern: "chaos",
+      stepPattern: "bounce",
       scoreValue: -90,
       edible: false
     },

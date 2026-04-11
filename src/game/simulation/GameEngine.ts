@@ -286,6 +286,8 @@ const lateralShiftForEnemy = (
       return rng() < 0.1 ? enemy.driftDir : 0;
     case "zigzag":
       return tickCount % 2 === 0 ? enemy.driftDir : -enemy.driftDir;
+    case "bounce":
+      return 0;
     default:
       return 0;
   }
